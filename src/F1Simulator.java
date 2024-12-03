@@ -66,9 +66,6 @@ public class F1Simulator {
             System.out.println("It's a tie! Both players have a total time of " + player1.getTime() + " seconds!");
         }
     }
-
-    public static void main(String[] args) {
-        F1Simulator simulator = new F1Simulator("Player 1", "Player 2", 5);
-        simulator.startRace();
-    }
 }
+
+
