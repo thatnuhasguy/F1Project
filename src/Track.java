@@ -1,11 +1,23 @@
 public class Track {
-    private int totalLaps;
+    private int numberOfLaps;
+    private int numberOfCorners;
 
-    public Track(int totalLaps) {
-        this.totalLaps = totalLaps;
+    public Track(int numberOfLaps, int numberOfCorners) {
+        this.numberOfLaps = numberOfLaps;
+        this.numberOfCorners = numberOfCorners;
     }
 
-    public int getTotalLaps() {
-        return totalLaps;
+    public int getNumberOfLaps() {
+        return numberOfLaps;
+    }
+
+    public int getNumberOfCorners() {
+        return numberOfCorners;
+    }
+
+    public void displayTrackInfo() {
+        System.out.println("Track Details:");
+        System.out.println("Number of Laps: " + numberOfLaps);
+        System.out.println("Number of Corners: " + numberOfCorners);
     }
 }
