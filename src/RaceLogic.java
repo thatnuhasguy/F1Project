@@ -10,7 +10,6 @@ public class RaceLogic {
 
     public RaceLogic() {
         Scanner inputScanner = new Scanner(System.in);
-
         // Gather input for players
         System.out.print("Enter Player 1 name: ");
         String player1Name = inputScanner.nextLine();
@@ -33,32 +32,31 @@ public class RaceLogic {
         int corners = inputScanner.nextInt();
         track = new Track(laps, corners);
     }
-    public void start() {
-        System.out.println("Would you like to start? (enter 'yes' or enter 'no')");
-            for (int lap = 1; lap <= track.getNumberOfLaps(); lap++) {
-                System.out.println("\n--- Lap " + lap + " ---");
-                // Simulate laps for both players
-                boolean redFlag = simulateLap(player1);
-                if (!redFlag) {
-                    redFlag = simulateLap(player2);
-                }
-                if (redFlag) {
-                    System.out.println("\nRed Flag! The race is stopped due to a crash.");
-                    break;
-                }
-                checkDRS(); //checks the ability to use DRS at the end of the lap (not realistic, but we will carry on with this format)
-            }
-            determineWinner();
 
+    public void start() {
+        track.displayTrackInfo();
+        for (int lap = 1; lap <= track.getNumberOfLaps(); lap++) {
+            System.out.println("\n--- Lap " + lap + " ---");
+            // Simulate laps for both players
+            boolean redFlag = simulateLap(player1);
+            if (!redFlag) {
+                redFlag = simulateLap(player2);
+            }
+            if (redFlag) {
+                System.out.println("\nRed Flag! The race is stopped due to a crash.");
+                break;
+            }
+            checkDRS(); //checks the ability to use DRS at the end of the lap (not realistic, but we will carry on with this format)
+        }
+        determineWinner();
     }
+
     private boolean simulateLap(Player player) {
         double lapTime = 0.0;
         boolean collision = false;
-
         for (int corner = 1; corner <= track.getNumberOfCorners(); corner++) {
             int choice = getPlayerStrategy(player, corner);
             lapTime += calculateCornerTime(choice);
-
             // Check for crashes
             if (choice == 1 && random.nextBoolean()) { // Divebombing is risky. Random.nextBoolean represents a 50/50 chance when it comes to divebomb.
                 collision = true;
@@ -67,12 +65,10 @@ public class RaceLogic {
                 break;
             }
         }
-
         if (!collision) { //if there is no collision, laptimes will be posted along with the player that completed it.
             player.addLapTime(lapTime);
             System.out.println(player.getName() + " finished the lap with time: " + lapTime);
         }
-
         return collision; // gets passed back into start() method to see if a crash occurred. Race will be red flagged accordingly.
     }
 
@@ -119,7 +115,6 @@ public class RaceLogic {
         System.out.println("\nFinal Results:");
         System.out.println(player1.getName() + "'s Final Time: " + player1.getTotalLapTime());
         System.out.println(player2.getName() + "'s Final Time: " + player2.getTotalLapTime());
-
         if (player1.getTotalLapTime() < player2.getTotalLapTime()) {
             System.out.println("Winner: " + player1.getName());
         } else if (player2.getTotalLapTime() < player1.getTotalLapTime()) {
@@ -127,7 +122,6 @@ public class RaceLogic {
         } else {
             System.out.println("It's a tie!");
         }
-
         if (player1.hasCollided()) {
             System.out.println(player1.getName() + " had a collision during the race.");
         }

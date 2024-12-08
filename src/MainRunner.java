@@ -4,9 +4,5 @@ public class MainRunner {
         // Create RaceLogic object
         RaceLogic race = new RaceLogic();
         race.start();
-
-
-
-
     }
 }
