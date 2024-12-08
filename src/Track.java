@@ -17,7 +17,7 @@ public class Track {
 
     public void displayTrackInfo() {
         System.out.println("Track Details:");
-        System.out.println("Number of Laps: " + numberOfLaps);
-        System.out.println("Number of Corners: " + numberOfCorners);
+        System.out.println("Number of Laps: " + getNumberOfLaps());
+        System.out.println("Number of Corners: " + getNumberOfCorners());
     }
 }

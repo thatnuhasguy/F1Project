@@ -58,7 +58,7 @@ public class RaceLogic {
             int choice = getPlayerStrategy(player, corner);
             lapTime += calculateCornerTime(choice);
             // Check for crashes
-            if (choice == 1 && random.nextBoolean()) { // Divebombing is risky. Random.nextBoolean represents a 50/50 chance when it comes to divebomb.
+            if (choice == 1 && ((int)(Math.random()*2)+1)==2) { // Divebombing is risky.
                 collision = true;
                 player.setCollided(true);
                 System.out.println(player.getName() + " has crashed at corner " + corner + "!");
