@@ -23,7 +23,7 @@ public class RaceLogic {
         if(player2Name.equalsIgnoreCase("")){
             player2= new Player("Max", "Verstappen");
         } else {
-            player1 = new Player(player1Name);
+            player2 = new Player(player2Name);
         }
         // Gather input for track details
         System.out.print("Enter number of laps: ");
