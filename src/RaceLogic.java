@@ -23,12 +23,12 @@ public class RaceLogic {
         if(player2Name.equalsIgnoreCase("")){
             player2= new Player("Max", "Verstappen");
         } else {
-            player1 = new Player(player1Name);
+            player2 = new Player(player2Name);
         }
         // Gather input for track details
-        System.out.print("Enter number of laps: ");
+        System.out.print("Enter number of laps (positive integer value only): ");
         int laps = inputScanner.nextInt();
-        System.out.print("Enter number of corners per lap: ");
+        System.out.print("Enter number of corners per lap (positive integer value only): ");
         int corners = inputScanner.nextInt();
         track = new Track(laps, corners);
     }
@@ -73,7 +73,7 @@ public class RaceLogic {
     }
 
     private int getPlayerStrategy(Player player, int corner) {
-        System.out.println(player.getName() + ", choose your strategy for corner " + corner + ":");
+        System.out.println(player.getName() + ", choose your strategy for corner " + corner + "(make sure to input the following integers listed below):");
         System.out.println("1: Divebomb (Risky but fastest)");
         System.out.println("2: Ideal Line (Balanced)");
         System.out.println("3: Early Braking (Safest but slowest)");
@@ -97,36 +97,44 @@ public class RaceLogic {
         Player behind;
         Player ahead;
         if(p1Lap<p2Lap){  // player with the most time is behind and player with the least time is in front
-             behind = player2;
-             ahead = player1;
+            behind = player2;
+            ahead = player1;
         } else{
-             behind= player1;
-             ahead= player2;
+            behind= player1;
+            ahead= player2;
         }
         if (timeDifference <= 1.0) {
             System.out.println("DRS activated for " + behind.getName() + "! Attempting overtake...");
             if (random.nextBoolean()) {
                 System.out.println("Overtake successful! " + behind.getName() + " overtakes " + ahead.getName());
-        }
+            } else {
+                System.out.println("Overtake unsuccessful! "+behind.getName()+" failed to overtake "+ ahead.getName());
+            }
         }
     }
 
+
     private void determineWinner() {
         System.out.println("\nFinal Results:");
-        System.out.println(player1.getName() + "'s Final Time: " + player1.getTotalLapTime());
-        System.out.println(player2.getName() + "'s Final Time: " + player2.getTotalLapTime());
-        if (player1.getTotalLapTime() < player2.getTotalLapTime()) {
-            System.out.println("Winner: " + player1.getName());
-        } else if (player2.getTotalLapTime() < player1.getTotalLapTime()) {
-            System.out.println("Winner: " + player2.getName());
+        if(player1.hasCollided()|| player2.hasCollided()){
+            if (player1.hasCollided()) {
+                System.out.println(player1.getName() + " had a collision during the race. Lap times have been voided.");
+            } else {
+                if (player2.hasCollided()) {
+                    System.out.println(player2.getName() + " had a collision during the race. Lap times have been voided.");
+                }
+            }
         } else {
-            System.out.println("It's a tie!");
-        }
-        if (player1.hasCollided()) {
-            System.out.println(player1.getName() + " had a collision during the race.");
-        }
-        if (player2.hasCollided()) {
-            System.out.println(player2.getName() + " had a collision during the race.");
+            track.displayTrackInfo(track.getNumberOfCorners(),track.getNumberOfLaps());
+            System.out.println(player1.getName() + "'s Final Time: " + player1.getTotalLapTime()+ " seconds");
+            System.out.println(player2.getName() + "'s Final Time: " + player2.getTotalLapTime()+" seconds");
+            if (player1.getTotalLapTime() < player2.getTotalLapTime()) {
+                System.out.println("Winner: " + player1.getName());
+            } else if (player2.getTotalLapTime() < player1.getTotalLapTime()) {
+                System.out.println("Winner: " + player2.getName());
+            } else {
+                System.out.println("It's a tie!");
+            }
         }
     }
 }
